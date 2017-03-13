@@ -1,0 +1,34 @@
+# Maintainer: Jabez Wilson
+# Updated for 3.0.1
+pkgname=ignition-math-hg
+pkgver=3.0.0
+pkgrel=1
+pkgdesc="The library defines math classes and functions used in other Ignition libraries and programs"
+arch=('i686' 'x86_64')
+url="http://ignitionrobotics.org"
+license=('Apache')
+groups=('development')
+depends=('mercurial')
+optdepends=()
+conflicts=("ignition-math")
+source=("hg+https://bitbucket.org/ignitionrobotics/ign-math")
+md5sums=('SKIP')
+_dir="ign-math"
+
+prepare() {
+  cd "${srcdir}/${_dir}"
+	hg up ignition-math3_3.0.0
+	mkdir -p build
+}
+
+build() {
+  cd "${srcdir}/${_dir}/build"
+	cmake .. -DCMAKE_INSTALL_PREFIX="/usr"
+}
+
+package() {
+  cd "${srcdir}/${_dir}/build"
+	make DESTDIR="$pkgdir/" install
+	cd "$pkgdir/usr"
+	[[ -d "lib64" ]] && mv "lib64" "lib"
+}

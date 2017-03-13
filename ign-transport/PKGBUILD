@@ -1,0 +1,35 @@
+# Maintainer: Jabez Wilson
+# Updated for 3.0.1
+pkgname=ignition-transport-hg
+pkgver=3.0.1
+pkgrel=1
+pkgdesc="The transport library combines ZeroMQ with Protobufs to create a fast and efficient message passing system"
+arch=('i686' 'x86_64')
+url="http://ignitionrobotics.org"
+license=('Apache')
+groups=('development')
+depends=('protobuf' 'protobuf-c' 'zeromq' 'uuid' 'mercurial' 'ignition-tools' 'ignition-math-hg>=3')
+makedepends=('cmake' 'ruby-ronn' 'pkg-config>=0.28' 'doxygen')
+optdepends=()
+conflicts=("ignition-transport")
+source=("hg+https://bitbucket.org/ignitionrobotics/ign-transport")
+md5sums=('SKIP')
+_dir="ign-transport"
+
+prepare() {
+  cd "${srcdir}/${_dir}"
+	hg up ignition-transport3_3.0.1
+	mkdir -p build
+}
+
+build() {
+  cd "${srcdir}/${_dir}/build"
+	cmake .. -DCMAKE_INSTALL_PREFIX="/usr"
+}
+
+package() {
+  cd "${srcdir}/${_dir}/build"
+	make DESTDIR="$pkgdir/" install
+	cd "$pkgdir/usr"
+	[[ -d "lib64" ]] && mkdir -p lib && mv lib64/* lib/ && rmdir lib64
+}
