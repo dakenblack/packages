@@ -4,7 +4,7 @@ pkgdesc="ROS - Robot-independent Gazebo plugins for sensors, motors and dynamic 
 url='http://gazebosim.org/tutorials?cat=connect_ros'
 
 pkgname='ros-indigo-gazebo-plugins'
-pkgver='2.6.1'
+pkgver='2.4.13'
 _pkgver_patch=0
 arch=('any')
 pkgrel=0
@@ -67,15 +67,15 @@ depends=(${ros_depends[@]}
   gazebo)
 
 # Git version (e.g. for debugging)
- _tag=release/indigo/gazebo_plugins/${pkgver}-${_pkgver_patch}
- _dir=${pkgname}
- source=("${_dir}"::"git+https://github.com/ros-gbp/gazebo_ros_pkgs-release.git"#tag=${_tag})
- sha256sums=('SKIP')
+ #_tag=release/indigo/gazebo_plugins/${pkgver}-${_pkgver_patch}
+ #_dir=${pkgname}
+ #source=("git+https://github.com/ros-gbp/gazebo_ros_pkgs-release.git")
+ #sha256sums=('SKIP')
 
 # Tarball version (faster download)
-#_dir="gazebo_ros_pkgs-release-release-indigo-gazebo_plugins"
-#source=("${pkgname}-${pkgver}-${_pkgver_patch}.tar.gz"::"https://github.com/ros-gbp/gazebo_ros_pkgs-release/archive/release/indigo/gazebo_plugins/${pkgver}-${_pkgver_patch}.tar.gz")
-#sha256sums=('2ef7277addd8cabeb223fd882688cf456eec485d6886549e4178a79e42a46948')
+_dir="gazebo_ros_pkgs-release-release-indigo-gazebo_plugins-$pkgver-$_pkgver_patch"
+source=("${pkgname}-${pkgver}-${_pkgver_patch}.tar.gz"::"https://github.com/ros-gbp/gazebo_ros_pkgs-release/archive/release/indigo/gazebo_plugins/${pkgver}-${_pkgver_patch}.tar.gz")
+sha256sums=('26820d9dc495f441810b44e98c66f03af53872955dc0fc6a3ec06b580b214cf7')
 
 build() {
   # Use ROS environment variables
